@@ -12,9 +12,12 @@ then
 	pname=$(basename $1)
 fi
 
-if [[ "$1" == *".c" || "$1" == *".h" ]]
+if [[ "$1" == *".c" || "$1" == *".h" || "$1" == *".cpp" || "$1" == *".hpp" ]]
 then
 	mode="c"
+elif [[ "$1" == *".hs" ]]
+then
+	mode="h"
 elif [[ "$1" == "Makefile" ]]
 then
 	mode="m"

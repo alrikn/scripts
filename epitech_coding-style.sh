@@ -49,7 +49,7 @@ then
 
     if [ $GHCR_REPOSITORY_STATUS -eq 0 ]; then
         echo "Downloading new image and cleaning old one..."
-        $BASE_EXEC_CMD pull ghcr.io/epitech/coding-style-checker:latest && $BASE_EXEC_CMD image prune -f
+        $BASE_EXEC_CMD pull --platform linux/amd64 ghcr.io/epitech/coding-style-checker:latest && $BASE_EXEC_CMD image prune -f
         echo "Download OK"
     else
         echo "WARNING: Skipping image download"
@@ -57,7 +57,7 @@ then
    
 
     ### generate reports
-    $BASE_EXEC_CMD run --rm -i -v "$DELIVERY_DIR":"/mnt/delivery" -v "$REPORTS_DIR":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"
+    $BASE_EXEC_CMD run --platform linux/amd64 --rm -i -v "$DELIVERY_DIR":"/mnt/delivery" -v "$REPORTS_DIR":"/mnt/reports" ghcr.io/epitech/coding-style-checker:latest "/mnt/delivery" "/mnt/reports"
     [[ -f "$EXPORT_FILE" ]] && echo "$(wc -l < "$EXPORT_FILE") coding style error(s) reported in "$EXPORT_FILE", $(grep -c ": MAJOR:" "$EXPORT_FILE") major, $(grep -c ": MINOR:" "$EXPORT_FILE") minor, $(grep -c ": INFO:" "$EXPORT_FILE") info"
 else
     cat_readme
