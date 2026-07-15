@@ -17,13 +17,12 @@ alias gtree='git log --graph --decorate --oneline --all'
 alias vf='valgrind --leak-check=full --track-origins=yes --show-reachable=yes --show-leak-kinds=all -s' #valgrind full
 alias vfl='valgrind --log-file="valgrind_log.log" --track-origins=yes --leak-check=full --show-leak-kinds=all --show-reachable=yes -s'
 alias rcpns='rsync -av --progress --exclude=".*"' #recursive copy no secret files or directories
-alias sl='/usr/games/sl; clear'
+alias sl='clear; /usr/games/sl; clear' # 2 clears so that i don't see text after the train, and so that when the train finishes the cursor is at the top
 alias train='sl'
 alias wunderbar='echo "wonderful"'
 alias rick='curl ascii.live/rick'
 alias korn='ksh'
 alias kentucky='echo "fried chicken"'
-alias kys='echo "keep yourself safe"'
 
 alias pyenv='source venv/bin/activate'
 alias cw="cc -Werror -Wall -Wextra"
