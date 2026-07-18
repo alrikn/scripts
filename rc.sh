@@ -23,6 +23,7 @@ alias wunderbar='echo "wonderful"'
 alias rick='curl ascii.live/rick'
 alias korn='ksh'
 alias kentucky='echo "fried chicken"'
+alias godot='godot4'
 
 alias pyenv='source venv/bin/activate'
 alias cw="cc -Werror -Wall -Wextra"
