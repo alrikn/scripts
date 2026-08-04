@@ -1,42 +1,47 @@
 -- Danis cool config
-local lspconfig = require("lspconfig")
 
-lspconfig.hls.setup {
-	on_attach = on_attach,
-	on_init = on_init,
-	capabilities = capabilities,
-	filetypes = { 'haskell', 'lhaskell', 'cabal' },
-}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-lspconfig.clangd.setup {
-    cmd = { "clangd", "--header-insertion=never" },
-    filetypes = { "c", "cpp", "objc", "objcpp" },
-	root_dir = function(fname)
-        return lspconfig.util.root_pattern("compile_commands.json", ".git")(fname) or lspconfig.util.path.dirname(fname)
-    end,
+vim.lsp.config("hls", {
     capabilities = capabilities,
-    on_attach = on_attach,
-}
+    filetypes = { "haskell", "lhaskell", "cabal" },
+})
 
-lspconfig.asm_lsp.setup({
+vim.lsp.config("clangd", {
+    cmd = { "clangd", "--header-insertion=never" },
+    capabilities = capabilities,
+    root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local root = vim.fs.root(fname, { "compile_commands.json", ".git" })
+        on_dir(root or vim.fs.dirname(fname))
+    end,
+})
+
+vim.lsp.config("asm_lsp", {
     filetypes = { "asm" },
     settings = {
         asm = {
             dialect = "nasm",
-            disableWarnings = true,  -- Disable unnecessary warnings
+            disableWarnings = true,
             highlightJumpLabels = true,
-        }
+        },
     },
-	handlers = { ["textDocument/publishDiagnostics"] = function() end }
 })
 
-lspconfig.pyright.setup({
-  settings = {
-    python = {
-      analysis = {
-        typeCheckingMode = "basic",  -- Adjust based on your needs
-        autoImportCompletions = true,
-      },
+vim.lsp.config("pyright", {
+    settings = {
+        python = {
+            analysis = {
+                typeCheckingMode = "basic",
+                autoImportCompletions = true,
+            },
+        },
     },
-  },
+})
+
+vim.lsp.enable({
+    "hls",
+    "clangd",
+    "asm_lsp",
+    "pyright",
 })
