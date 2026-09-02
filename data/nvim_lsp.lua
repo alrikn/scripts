@@ -39,9 +39,33 @@ vim.lsp.config("pyright", {
     },
 })
 
+vim.lsp.config("gopls", {
+    capabilities = capabilities,
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        local root = vim.fs.root(fname, { "go.work", "go.mod", ".git" })
+        on_dir(root or vim.fs.dirname(fname))
+    end,
+    settings = {
+        gopls = {
+            gofumpt = true,
+            staticcheck = true,
+            usePlaceholders = true,
+            analyses = {
+                unusedparams = true,
+                shadow = true,
+                nilness = true,
+                unusedwrite = true,
+            },
+        },
+    },
+})
+
 vim.lsp.enable({
     "hls",
     "clangd",
     "asm_lsp",
     "pyright",
+	"gopls",
 })
