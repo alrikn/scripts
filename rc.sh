@@ -1,7 +1,7 @@
 #!/bin/bash
 basepath=$1
 
-PATH="$PATH:.:/home/user/.local/share/bob/nvim-bin:/home/user/.cargo/bin"
+PATH="$PATH:.:/home/user/.local/share/bob/nvim-bin:/home/user/.cargo/bin:$HOME/.local/share/swiftly/bin"
 
 $basepath/local_files.sh
 
@@ -23,9 +23,10 @@ alias wunderbar='echo "wonderful"'
 alias rick='curl ascii.live/rick'
 alias korn='ksh'
 alias kentucky='echo "fried chicken"'
-alias godot='godot4'
 
 alias pyenv='source venv/bin/activate'
 alias cw="cc -Werror -Wall -Wextra"
+
+alias whattimeisit='/bin/bash -c '\''day_month_year=$(date +"%d/%m/%Y"); hour_minutes=$(date +"%H:%M"); echo It is currently $day_month_year at $hour_minutes.'\'''
 
 [ -f bin/activate ] && pyenv
