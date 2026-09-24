@@ -22,7 +22,6 @@ alias train='sl'
 alias wunderbar='echo "wonderful"'
 alias rick='curl ascii.live/rick'
 alias korn='ksh'
-alias kentucky='echo "fried chicken"'
 
 alias pyenv='source venv/bin/activate'
 alias cw="cc -Werror -Wall -Wextra"
