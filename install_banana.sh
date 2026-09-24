@@ -45,6 +45,29 @@ else
     git clone "$REPO_URL" "$TARGET_DIR"
 fi
 
+echo "==> Loading Epitech coding-style Docker image..."
+IMAGE="ghcr.io/epitech/coding-style-checker:latest"
+ARCHIVE_NAME="style-latest.tar.gz"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ARCHIVE=""
+for dir in "$TARGET_DIR" "$SCRIPT_DIR"; do
+    if [ -f "$dir/$ARCHIVE_NAME" ]; then
+        ARCHIVE="$dir/$ARCHIVE_NAME"
+        break
+    fi
+done
+
+if sudo docker image inspect "$IMAGE" >/dev/null 2>&1; then
+    echo "Image already present, skipping."
+elif [ -n "$ARCHIVE" ]; then
+    sudo docker load -i "$ARCHIVE"
+else
+    echo "WARNING: $ARCHIVE_NAME not found in $TARGET_DIR or $SCRIPT_DIR."
+    echo "         The upstream 'latest' tag no longer exists on ghcr.io, so 'banana' will not work"
+    echo "         until you copy $ARCHIVE_NAME onto this machine and run:"
+    echo "             sudo docker load -i $TARGET_DIR/$ARCHIVE_NAME"
+fi
+
 echo "==> Wiring aliases into $BASHRC..."
 if ! grep -qF "$SOURCE_LINE" "$BASHRC" 2>/dev/null; then
     printf '\n# Load custom scripts (banana, coding-style, etc.)\n%s\n' "$SOURCE_LINE" >>"$BASHRC"
